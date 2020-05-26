@@ -1,10 +1,18 @@
 import React from 'react';
 
-import { View, Text, Animated } from 'react-native';
+import { View, Text, Animated, PanResponder } from 'react-native';
 
 import { Card, Button, Image } from 'react-native-elements'
 
 export default function Deck({data}) {
+
+  const panResponder = PanResponder.create({
+    onStartShouldSetPanResponder: () => true,
+    onPanResponderMove: (event, gesture) => {
+      console.log(gesture);
+    },
+    onPanResponderRelease: () => {},
+  });
   
   const renderCards = () => {
     return data.map((item) => (
@@ -21,6 +29,8 @@ export default function Deck({data}) {
   };
 
   return(
-    <View>{renderCards()}</View>
+    <View {...panResponder.panHandlers}>
+      {renderCards()}
+    </View>
   )
 }
